@@ -1,8 +1,6 @@
-import numpy as np
-
 Grit = [
     [8, 2, 22, 97, 38, 15, 00, 40, 00, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8],
-    [49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 6, 9, 48, 4, 56, 62, 00],
+    [49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 4, 56, 62, 00],
     [81, 49, 31, 73, 55, 79, 14, 29, 93, 71, 40, 67, 53, 88, 30, 3, 49, 13, 36, 65],
     [52, 70, 95, 23, 4, 60, 11, 42, 69, 24, 68, 56, 1, 32, 56, 71, 37, 2, 36, 91],
     [22, 31, 16, 71, 51, 67, 63, 89, 41, 92, 36, 54, 22, 40, 40, 28, 66, 33, 13, 80],
@@ -26,53 +24,46 @@ Grit = [
 list_len = len(Grit[:][0])
 max_prod = 0
 
-"""i=0
-print(50*77*91*12)
-for j in range(0,list_len-3):
-    prod = 1
-    for k in range(j,j+4):
-        prod *= Grit[i][k]
-
-    if prod > max_prod:
-        max_prod = prod 
-print(max_prod)"""
-
 
 # Horizontal part
 for i in range(0,list_len):
-    for j in range(0,list_len):
+    for j in range(0,list_len-3):
         prod = 1
         for k in range(j,j+4):
-            prod *= Grit[i%list_len][k%list_len]
+            prod *= Grit[i][k]
+        
+            if prod > max_prod:
+                max_prod = prod 
+        
 
-        if prod > max_prod:
-            max_prod = prod 
-#print(max_prod)
+print(max_prod)
 #max_prod = 0
+
 # Vertical part
-for i in range(0,list_len):
+for i in range(0,list_len-3):
     for j in range(0,list_len):
         prod = 1
         for k in range(i,i+4):
-            prod *= Grit[k%list_len][j%list_len]
+            prod *= Grit[k][j]
 
-        if prod > max_prod:
-            max_prod = prod 
+            if prod > max_prod:
+                max_prod = prod 
 
-#print(max_prod)
+print(max_prod)
 #max_prod = 0
 
+
 # Diagonal from top left, to bottom right
-for i in range(0,list_len):
-    for j in range(0,list_len):
+for i in range(0,list_len-3):
+    for j in range(0,list_len-3):
         prod = 1
         for k in range(0,4):
-            prod *= Grit[(i+k)%list_len][(j+k)%list_len]
+            prod *= Grit[(i+k)][(j+k)]
 
-        if prod > max_prod:
-            max_prod = prod 
-
-#print(max_prod)
+            if prod > max_prod:
+                max_prod = prod 
+        
+print(max_prod)
 #max_prod=0
 
 
@@ -81,10 +72,9 @@ for i in range(0,list_len):
     for j in range(list_len-1,list_len-2,-1):
         prod = 1
         for k in range(0,4):
-            prod *= Grit[i-k][j-k]
+            prod *= Grit[(i-k)][(j-k)]
             
-
-        if prod > max_prod:
-            max_prod = prod 
+            if prod > max_prod:
+                max_prod = prod 
 
 print(max_prod)
