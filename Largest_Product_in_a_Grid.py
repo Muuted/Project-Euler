@@ -21,50 +21,44 @@ Grit = [
     [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ]
 
+def print_state(prod,max_prod,i,j):
+    if prod > max_prod:
+            max_prod = prod 
+            print(f'({i},{j}), max_prod:{max_prod}')
+    return max_prod
+    
 list_len = len(Grit[:][0])
 max_prod = 0
 
 
 # Horizontal part
 for i in range(0,list_len):
-    for j in range(0,list_len-3):
+    for j in range(0,list_len):
         prod = 1
         for k in range(j,j+4):
-            prod *= Grit[i][k]
+            prod *= Grit[i][k%list_len]
         
-            if prod > max_prod:
-                max_prod = prod 
-        
-
-print(max_prod)
-#max_prod = 0
+    max_prod =print_state(prod,max_prod,i,j)
 
 # Vertical part
-for i in range(0,list_len-3):
+for i in range(0,list_len):
     for j in range(0,list_len):
         prod = 1
         for k in range(i,i+4):
-            prod *= Grit[k][j]
+            prod *= Grit[k%list_len][j]
 
-            if prod > max_prod:
-                max_prod = prod 
-
-print(max_prod)
-#max_prod = 0
+    max_prod =print_state(prod,max_prod,i,j)
 
 
 # Diagonal from top left, to bottom right
-for i in range(0,list_len-3):
-    for j in range(0,list_len-3):
+for i in range(0,list_len):
+    for j in range(0,list_len):
         prod = 1
         for k in range(0,4):
-            prod *= Grit[(i+k)][(j+k)]
+            prod *= Grit[(i+k)%list_len][(j+k)%list_len]
 
-            if prod > max_prod:
-                max_prod = prod 
-        
-print(max_prod)
-#max_prod=0
+    max_prod =print_state(prod,max_prod,i,j)
+    
 
 
 # Diagonal from top right, to bottom left
@@ -72,9 +66,6 @@ for i in range(0,list_len):
     for j in range(list_len-1,list_len-2,-1):
         prod = 1
         for k in range(0,4):
-            prod *= Grit[(i-k)][(j-k)]
+            prod *= Grit[(i-k)%list_len][(j-k)%list_len]
             
-            if prod > max_prod:
-                max_prod = prod 
-
-print(max_prod)
+    max_prod =print_state(prod,max_prod,i,j)
