@@ -1,7 +1,7 @@
 
 import time
 
-
+"""
 n = 3 # 2x2 lattice
 
 max_col = False
@@ -15,6 +15,7 @@ last_row =0
 last_col = n
 
 a = time.time()
+
 running = True
 while running:
     if col == 0:
@@ -50,11 +51,33 @@ while running:
         running = False
         
     b = time.time()
-    if ((b-a)/60 >0.1):
+    if ((b-a)/60 >0.01):
         running = False
-        print('done')
-    
-        
+        print('done') 
+print('num paths = ',num_paths)        
+"""
 
-    
-print('num paths = ',num_paths)
+
+
+path_list = [
+    [(0,0)], [(1,1)]
+    ]
+
+x, y = 0,0
+
+
+print(path_list[:])
+
+
+"""
+print(path_list[0][len(path_list[0])-1])
+
+path_list[0].append((4,8))
+print(path_list[0][len(path_list[0])-1])
+print(path_list)
+
+path_list.append([(5,9)])
+print(path_list[0][len(path_list[0])-1])
+print("\n")
+print("\n")
+print(path_list)"""
