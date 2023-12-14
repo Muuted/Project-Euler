@@ -23,7 +23,7 @@ Grit2 = """
 Grit2 = [row.strip() for row in Grit2.split("\n")]
 Grit2 = [[int(cell) for cell in row.split(" ")] for row in Grit2 if row != ""]
 
-exit()
+
 Grit = [
     [8, 2, 22, 97, 38, 15, 00, 40, 00, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8],
     [49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 4, 56, 62, 00],
@@ -46,56 +46,61 @@ Grit = [
     [20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54],
     [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ]
-
+expected_answer = 70_600_674
+#Grit = Grit2.copy()
 def print_state(prod,max_prod,i,j):
     expected_answer = 70_600_674
     if prod > max_prod:
             max_prod = prod 
-            #print(f'({i},{j}), max_prod:{max_prod}')
+            #print(f'max_prod/expected_answer = {max_prod/expected_answer}')
     if prod == expected_answer:
         print("problem solved")
 
     return max_prod
     
 list_len = len(Grit[:][0])
+
 max_prod = 0
 
 
 # Horizontal part
-for i in range(0,list_len):
-    for j in range(0,list_len):
+for row in range(0,list_len):
+    for col in range(0,list_len):
         prod = 1
-        for k in range(j,j+4):
-            prod *= Grit[i][k%list_len]
+        for k in range(0,4):
+            prod *= Grit[row][(col+k)%list_len]
         
-    max_prod = print_state(prod,max_prod,i,j)
+        max_prod = print_state(prod,max_prod,row,col)
 
 # Vertical part
-for i in range(0,list_len):
-    for j in range(0,list_len):
+for row in range(0,list_len):
+    for col in range(0,list_len):
         prod = 1
-        for k in range(i,i+4):
-            prod *= Grit[k%list_len][j]
+        for k in range(0,4):
+            prod *= Grit[(row+k)%list_len][col]
 
-    max_prod =print_state(prod,max_prod,i,j)
+        max_prod = print_state(prod,max_prod,row,col)
 
 
 # Diagonal from top left, to bottom right
-for i in range(0,list_len):
-    for j in range(0,list_len):
+for row in range(0,list_len):
+    for col in range(0,list_len):
         prod = 1
         for k in range(0,4):
-            prod *= Grit[(i+k)%list_len][(j+k)%list_len]
+            prod *= Grit[(row+k)%list_len][(col+k)%list_len]
 
-    max_prod =print_state(prod,max_prod,i,j)
+        max_prod = print_state(prod,max_prod,row,col)
     
 
 
 # Diagonal from top right, to bottom left
-for i in range(0,list_len):
-    for j in range(list_len-1,list_len-2,-1):
+for row in range(0,list_len):
+    for col in range(0,list_len):
         prod = 1
         for k in range(0,4):
-            prod *= Grit[(i-k)%list_len][(j-k)%list_len]
-            
-    max_prod =print_state(prod,max_prod,i,j)
+            prod *= Grit[( row-k )][( col+ k )%list_len]
+             
+        max_prod = print_state(prod,max_prod,row,col)
+
+print(f'max_prod={max_prod}')
+print(f'max_prod/expected_answer = {max_prod/expected_answer}')
