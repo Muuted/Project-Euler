@@ -124,8 +124,6 @@ class Lattice_paths:
 def branch_func(n,path_list,printstate) -> list:
     done = False
     for i in range(len(path_list)):
-
-
         lx = path_list[i][len(path_list[i])-1][0] # last x val
         ly = path_list[i][len(path_list[i])-1][1] # last y val
 
@@ -159,13 +157,12 @@ def branch_func(n,path_list,printstate) -> list:
             # new tuples
             horiz = ( nx , ly )
             verti = ( lx , ny )
-
-            print("horiz:",horiz,"\n","verti:",verti)
-            path_list[i].append(horiz) # appends to where we stand
-            print("pathlist:",path_list)
-            
+ 
             temp = path_list[i].copy()
             temp.append(verti) # appends to the copy
+        
+            path_list[i].append(horiz) # appends to where we stand
+    
             path_list.append(temp) # makes the copy + new pos, a new list 
             
 
@@ -186,8 +183,9 @@ path_list = [
 
 n = 2
 finished = False
-for _ in range(10*n):
-    new_pathlist, finished = branch_func(n,path_list,printstate=True)[0], branch_func(n,path_list,printstate=False)[1]
+print_it = True
+for _ in range(2*n):
+    new_pathlist, finished = branch_func(n,path_list,printstate=print_it)[0], branch_func(n,path_list,printstate=False)[1]
     path_list = new_pathlist.copy()
     if finished == True:
         print('We have the Final result:')
