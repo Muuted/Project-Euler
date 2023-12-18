@@ -1,5 +1,6 @@
 
 import time
+import random 
 
 """
 n = 3 # 2x2 lattice
@@ -60,24 +61,113 @@ print('num paths = ',num_paths)
 
 
 path_list = [
-    [(0,0)], [(1,1)]
+    [(0,0)]
     ]
 
-x, y = 0,0
 
+#testing getting new paths
+"""
+temp = path_list[0].copy()
+path_list[0].append((0,1))
+path_list.append(temp)
+path_list[len(path_list)-1].append((1,0))
 
-print(path_list[:])
+for obj in path_list:    
+    print(obj)
+print('\n')
+"""
+
 
 
 """
-print(path_list[0][len(path_list[0])-1])
+class Lattice_paths:
+    def __init__(self,n) -> None:
+        self.s = n
+        #self.paths = [[(0,0)]]
 
-path_list[0].append((4,8))
-print(path_list[0][len(path_list[0])-1])
-print(path_list)
 
-path_list.append([(5,9)])
-print(path_list[0][len(path_list[0])-1])
-print("\n")
-print("\n")
-print(path_list)"""
+    def branch_func() -> list:
+        n = self.size
+        path_list = self.paths
+        for i in range(len(path_list)):
+            temp = path_list[i].copy()
+
+            lx = path_list[i][len(path_list[i])-1][0] # last x val
+            ly = path_list[i][len(path_list[i])-1][1] # last y val
+            nx, ny = lx ,ly
+
+            if lx <= n:
+                nx += 1
+            if ly <= n:
+                ny += 1
+
+            # new tuples
+            horiz = ( nx , ly )
+            verti = ( lx , ny )
+            #print(horiz)
+            path_list[i].append(horiz)
+            temp.append(verti)
+            path_list.append(temp)
+
+        for obj in path_list:    
+            print(obj)
+
+        return path_list
+    
+    def run(s):
+        print("HIIIIIIIIIIIIIIIIIII",self.s)
+        for _ in range(6):
+            print(self.size)
+            print('New paths')
+            new_pathlist = branch_func(path_list)
+            path_list = new_pathlist.copy()
+            print('\n')
+            print(len(path_list))
+"""
+
+
+def branch_func(n,path_list,printstate) -> list:
+    done = False
+    for i in range(len(path_list)):
+        temp = path_list[i].copy()
+
+        lx = path_list[i][len(path_list[i])-1][0] # last x val
+        ly = path_list[i][len(path_list[i])-1][1] # last y val
+
+        if lx + ly < 2*n:
+            nx, ny = lx ,ly
+
+            if lx <= n:
+                nx += 1
+            if ly <= n:
+                ny += 1
+
+            # new tuples
+            horiz = ( nx , ly )
+            verti = ( lx , ny )
+            #print(horiz)
+            path_list[i].append(horiz)
+            temp.append(verti)
+            path_list.append(temp)
+
+        if lx + ly >= 2*n:
+            done = True
+            break
+
+            pass
+    if printstate == True:
+        for obj in path_list:    
+            print(obj)
+
+        return path_list, done
+
+
+n = 2
+finished = False
+for _ in range(n**2):
+    new_pathlist, finished = branch_func(n,path_list,printstate=False)[0], branch_func(n,path_list,printstate=False)[1]
+    path_list = new_pathlist.copy()
+    if finished == True:
+        print('We have the Final result:')
+        print('number of paths =',len(path_list))
+        break
