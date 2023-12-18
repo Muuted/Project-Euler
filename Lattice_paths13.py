@@ -134,35 +134,47 @@ def branch_func(n,path_list,printstate) -> list:
         lx = path_list[i][len(path_list[i])-1][0] # last x val
         ly = path_list[i][len(path_list[i])-1][1] # last y val
 
+        if lx + ly >= 2*n: # we have reached the right bottom corner.
+            done = True
+            print('we finished, num of paths:',len(path_list))
+            break
+
         if lx + ly < 2*n:
+            #print(lx+ly,2*n)
             nx, ny = lx ,ly
 
+            # Not reached boundary
             if lx <= n:
-                nx += 1
+                nx = lx + 1
             if ly <= n:
-                ny += 1
+                ny = ly + 1
+
+            # Reached Boundary
+            if lx >= n:
+                print('lx>=n',lx)
+                ny = ly + 1
+            if ly >= n:
+                print("ly>=n",ly)
+                nx = lx + 1
 
             # new tuples
             horiz = ( nx , ly )
             verti = ( lx , ny )
-            #print(horiz)
-            path_list[i].append(horiz)
-            temp.append(verti)
-            path_list.append(temp)
+            
+            path_list[i].append(horiz) # appends to where we stand
+            temp.append(verti) # appends to the copy
+            path_list.append(temp) # makes the copy + new pos, a new list 
 
-        if lx + ly >= 2*n:
-            done = True
-            break
 
-            pass
     if printstate == True:
+        print("")
         for obj in path_list:    
             print(obj)
 
-        return path_list, done
+    return path_list, done
 
 
-n = 2
+n = 3
 finished = False
 for _ in range(n**2):
     new_pathlist, finished = branch_func(n,path_list,printstate=False)[0], branch_func(n,path_list,printstate=False)[1]
