@@ -146,9 +146,9 @@ def branch_func(n,path_list,printstate) -> list:
 
             # Reached Boundary
             if lx >= n and ly < n:
-                ny = ly + 1
+                ly = ly + 1
             if ly >= n and lx < n:
-                nx = lx + 1
+                lx = lx + 1
 
 
             if lx > n: # check if we exceede the allowed limit
@@ -160,10 +160,14 @@ def branch_func(n,path_list,printstate) -> list:
             horiz = ( nx , ly )
             verti = ( lx , ny )
 
-            temp = path_list[i].copy()
+            print("horiz:",horiz,"\n","verti:",verti)
             path_list[i].append(horiz) # appends to where we stand
+            print("pathlist:",path_list)
+            
+            temp = path_list[i].copy()
             temp.append(verti) # appends to the copy
             path_list.append(temp) # makes the copy + new pos, a new list 
+            
 
 
     if printstate == True:
@@ -183,9 +187,11 @@ path_list = [
 n = 2
 finished = False
 for _ in range(10*n):
-    new_pathlist, finished = branch_func(n,path_list,printstate=False)[0], branch_func(n,path_list,printstate=False)[1]
+    new_pathlist, finished = branch_func(n,path_list,printstate=True)[0], branch_func(n,path_list,printstate=False)[1]
     path_list = new_pathlist.copy()
     if finished == True:
         print('We have the Final result:')
         print('number of paths =',len(path_list))
         break
+
+#print(path_list)
