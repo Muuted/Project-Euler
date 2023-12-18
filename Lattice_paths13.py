@@ -60,11 +60,6 @@ print('num paths = ',num_paths)
 
 
 
-path_list = [
-    [(0,0)]
-    ]
-
-
 #testing getting new paths
 """
 temp = path_list[0].copy()
@@ -129,7 +124,7 @@ class Lattice_paths:
 def branch_func(n,path_list,printstate) -> list:
     done = False
     for i in range(len(path_list)):
-        temp = path_list[i].copy()
+
 
         lx = path_list[i][len(path_list[i])-1][0] # last x val
         ly = path_list[i][len(path_list[i])-1][1] # last y val
@@ -144,23 +139,28 @@ def branch_func(n,path_list,printstate) -> list:
             nx, ny = lx ,ly
 
             # Not reached boundary
-            if lx <= n:
+            if lx < n:
                 nx = lx + 1
-            if ly <= n:
+            if ly < n:
                 ny = ly + 1
 
             # Reached Boundary
-            if lx >= n:
-                print('lx>=n',lx)
+            if lx >= n and ly < n:
                 ny = ly + 1
-            if ly >= n:
-                print("ly>=n",ly)
+            if ly >= n and lx < n:
                 nx = lx + 1
+
+
+            if lx > n: # check if we exceede the allowed limit
+                print('lx>=n','lx=',lx,'ly=',ly)
+            if ly > n:
+                print('ly>=n','lx=',lx,'ly=',ly)
 
             # new tuples
             horiz = ( nx , ly )
             verti = ( lx , ny )
-            
+
+            temp = path_list[i].copy()
             path_list[i].append(horiz) # appends to where we stand
             temp.append(verti) # appends to the copy
             path_list.append(temp) # makes the copy + new pos, a new list 
@@ -174,9 +174,15 @@ def branch_func(n,path_list,printstate) -> list:
     return path_list, done
 
 
-n = 3
+
+
+path_list = [
+    [(0,0)]
+    ]
+
+n = 2
 finished = False
-for _ in range(n**2):
+for _ in range(10*n):
     new_pathlist, finished = branch_func(n,path_list,printstate=False)[0], branch_func(n,path_list,printstate=False)[1]
     path_list = new_pathlist.copy()
     if finished == True:
