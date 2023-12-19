@@ -44,7 +44,7 @@ def branch_func(n,path_list,printstate) -> list:
             path_list[i].append(horiz) # appends to where we stand
             path_list.append(temp) # makes the copy + new pos, a new list 
             
-            path_list = prune_list(path_list)
+    #path_list = prune_list(path_list)
 
 
     if printstate == True:
@@ -75,30 +75,23 @@ path_list = [
     [(0,0)]
     ]
 
-n = 20
+n = 2
 finished = False
 print_it = False
+time1 = time.time()
 for _ in range(2*n):
-    print(f"we are at iteration:{_}")
-    new_pathlist, finished = branch_func(n,path_list,printstate=print_it)
-    #new_pathlist = remove_prior(new_pathlist)
-    path_list = new_pathlist.copy()
+    
+    time2 = time.time()
+    print(f"we are at iteration:{_} and it took {(time2-time1)/60} min")
+    #new_
+    path_list, finished = branch_func(n,path_list,printstate=print_it)
+    #new_pathlist = prune_list(new_pathlist)
+    #path_list = new_pathlist.copy()
     if finished == True:
         print('We have the Final result:')
         print('number of paths =',len(path_list))
         break
-"""
-result = []
-for i in path_list:
-    if i not in result:
-        result.append(i)
-
-print("final result")
-for obj in result:    
-        print(obj)
-"""
-#for i in path_list:
-    #print(i)
+path_list = prune_list(path_list)
 print("len=",len(path_list))
 
  
