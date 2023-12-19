@@ -44,6 +44,7 @@ def branch_func(n,path_list,printstate) -> list:
             path_list[i].append(horiz) # appends to where we stand
             path_list.append(temp) # makes the copy + new pos, a new list 
             
+            path_list = prune_list(path_list)
 
 
     if printstate == True:
@@ -54,39 +55,50 @@ def branch_func(n,path_list,printstate) -> list:
     return path_list, done
 
 
+def remove_prior(lists)->list:
+    print("list:",lists)
+    temp = []
+    for i in range(len(lists)):
+        x = lists[i][len(lists[i])-1][0]
+        y = lists[i][len(lists[i])-1][1]
+        temp.append([(x,y)])        
+    print("temp=",temp)
+    return temp
 
-
+def prune_list(lists)->list: 
+    result = []
+    for i in lists:
+        if i not in result:
+            result.append(i)
+    return result
 path_list = [
     [(0,0)]
     ]
 
-n = 2
+n = 20
 finished = False
 print_it = False
 for _ in range(2*n):
-    new_pathlist, finished = branch_func(n,path_list,printstate=print_it)[0], branch_func(n,path_list,printstate=False)[1]
+    print(f"we are at iteration:{_}")
+    new_pathlist, finished = branch_func(n,path_list,printstate=print_it)
+    #new_pathlist = remove_prior(new_pathlist)
     path_list = new_pathlist.copy()
     if finished == True:
         print('We have the Final result:')
         print('number of paths =',len(path_list))
         break
+"""
+result = []
+for i in path_list:
+    if i not in result:
+        result.append(i)
 
-sum = 0
-temp1 = path_list.copy()
-temp2 = path_list.copy()
-
-for i in range(len(temp1[0])):
-    for j in range(i,len(temp1[0])):
-        if (i != j) and (temp1[i] == temp2[j]):
-            path_list.pop(j)
-            sum += 1
-
-
-for obj in path_list:    
+print("final result")
+for obj in result:    
         print(obj)
+"""
+#for i in path_list:
+    #print(i)
 print("len=",len(path_list))
-print("sum=",sum)
 
-
-#print(path_list)
-#print(path_list[7][:])
+ 
