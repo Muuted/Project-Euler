@@ -133,6 +133,7 @@ def branch_func(n,path_list,printstate) -> list:
             break
 
         if lx + ly < 2*n:
+            temp = path_list[i].copy()
             #print(lx+ly,2*n)
             nx, ny = lx ,ly
 
@@ -158,7 +159,7 @@ def branch_func(n,path_list,printstate) -> list:
             horiz = ( nx , ly )
             verti = ( lx , ny )
  
-            temp = path_list[i].copy()
+            
             temp.append(verti) # appends to the copy
         
             path_list[i].append(horiz) # appends to where we stand
@@ -192,4 +193,17 @@ for _ in range(2*n):
         print('number of paths =',len(path_list))
         break
 
-#print(path_list)
+sum = 0
+temp = path_list.copy()
+for i in range(len(path_list[0])):
+    for j in range(1,len(path_list[0])):
+        #if i != j:
+        if path_list[i] == path_list[j]:
+                temp.pop(j)
+                sum += 1
+
+
+for obj in temp:    
+        print(obj)
+print("len=",len(temp))
+print("sum=",sum)
