@@ -1,4 +1,3 @@
-
 import time
 import random 
 
@@ -41,11 +40,8 @@ def branch_func(n,path_list,printstate) -> list:
             horiz = ( nx , ly )
             verti = ( lx , ny )
  
-            
             temp.append(verti) # appends to the copy
-        
             path_list[i].append(horiz) # appends to where we stand
-    
             path_list.append(temp) # makes the copy + new pos, a new list 
             
 
@@ -66,7 +62,7 @@ path_list = [
 
 n = 2
 finished = False
-print_it = True
+print_it = False
 for _ in range(2*n):
     new_pathlist, finished = branch_func(n,path_list,printstate=print_it)[0], branch_func(n,path_list,printstate=False)[1]
     path_list = new_pathlist.copy()
@@ -76,16 +72,21 @@ for _ in range(2*n):
         break
 
 sum = 0
-temp = path_list.copy()
-for i in range(len(path_list[0])):
-    for j in range(1,len(path_list[0])):
-        #if i != j:
-        if path_list[i] == path_list[j]:
-                temp.pop(j)
-                sum += 1
+temp1 = path_list.copy()
+temp2 = path_list.copy()
+
+for i in range(len(temp1[0])):
+    for j in range(i,len(temp1[0])):
+        if (i != j) and (temp1[i] == temp2[j]):
+            path_list.pop(j)
+            sum += 1
 
 
-for obj in temp:    
+for obj in path_list:    
         print(obj)
-print("len=",len(temp))
+print("len=",len(path_list))
 print("sum=",sum)
+
+
+#print(path_list)
+#print(path_list[7][:])
