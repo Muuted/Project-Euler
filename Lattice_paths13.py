@@ -1,6 +1,7 @@
 import time
 import random 
-
+from cProfile import Profile 
+from pstats import SortKey, Stats
 
 def branch_func(n,path_list,printstate) -> list:
     done = False
@@ -55,43 +56,53 @@ def branch_func(n,path_list,printstate) -> list:
     return path_list, done
 
 
-def remove_prior(lists)->list:
-    print("list:",lists)
-    temp = []
-    for i in range(len(lists)):
-        x = lists[i][len(lists[i])-1][0]
-        y = lists[i][len(lists[i])-1][1]
-        temp.append([(x,y)])        
-    print("temp=",temp)
-    return temp
-
 def prune_list(lists)->list: 
-    result = []
+    result1 = []
     for i in lists:
-        if i not in result:
-            result.append(i)
-    return result
-path_list = [
-    [(0,0)]
-    ]
-
-n = 2
-finished = False
-print_it = False
-time1 = time.time()
-for _ in range(2*n):
+        if i not in result1:
+            result1.append(i)
     
-    time2 = time.time()
-    print(f"we are at iteration:{_} and it took {(time2-time1)/60} min")
-    #new_
-    path_list, finished = branch_func(n,path_list,printstate=print_it)
-    #new_pathlist = prune_list(new_pathlist)
-    #path_list = new_pathlist.copy()
-    if finished == True:
-        print('We have the Final result:')
-        print('number of paths =',len(path_list))
-        break
-path_list = prune_list(path_list)
-print("len=",len(path_list))
+    result = []
+    for j in range(len(result1)):
+        x = result1[j][len(result1[j])-1][0] # last x val
+        y = result1[j][len(result1[j])-1][1] # last y val
+        result.append([(x,y)])
+    #print("result:",result)
+    return result1
 
+def first_try():
+        
+    path_list = [
+        [(0,0)]
+        ]
+
+    n = 10
+    finished = False
+    print_it = False
+    time1 = time.time()
+    for _ in range(2*n + 1):
+        time2 = time.time()
+        print(f"we are at iteration:{_} and it took {(time2-time1)/60} min")
+        #new_
+        path_list, finished = branch_func(n,path_list,printstate=print_it)
+        
+        #path_list = prune_list(path_list)
+        #path_list = new_pathlist.copy()
+
+    path_list = prune_list(path_list)
+    print(f'We have the Final result, it took {(time.time()-time1)/60}min')
+    print('number of paths =',len(path_list))
+    
+    print("len=",len(path_list))
+    #print(path_list)
+    return 0
  
+
+with Profile() as profile:
+    print(f"{first_try() = }")
+    (
+        Stats(profile)
+        .strip_dirs()
+        .sort_stats(SortKey.CALLS)
+        .print_stats()
+)
