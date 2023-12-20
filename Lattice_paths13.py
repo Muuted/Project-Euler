@@ -96,7 +96,7 @@ def first_try():
     print("len=",len(path_list))
     #print(path_list)
     return 0
- 
+"""
 
 with Profile() as profile:
     print(f"{first_try() = }")
@@ -106,3 +106,17 @@ with Profile() as profile:
         .sort_stats(SortKey.CALLS)
         .print_stats()
 )
+"""
+
+
+def second_try():
+    path_list = [ [0,1] ]
+
+    for pos in path_list:
+
+        x = pos[0] # x val
+        y = pos[1] # y val
+        print("second try.",x,y)
+    return 0
+
+second_try()
