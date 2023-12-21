@@ -110,43 +110,27 @@ with Profile() as profile:
 """
 
 
-def second_try(n,path_lists):
-    
-    path_list = path_lists.copy()
+def second_try(n,path_list):
     temp_list = []
-    list_len = len(path_list)
-    print(path_list) 
-    for i in range(list_len):
-        nx,ny = 0,0
-        x = path_list[i][0] # x val
-        y = path_list[i][1] # y val
+    for i in range(len(path_list)):
         
-        # dealing with horizontal movement
-        if x < n:
+        if path_list[i][0] < n: # x pos
             path_list[i][0] += 1
-        """
-        if x >= n and y < n:
-            path_list[i][1] += 1
-        """
-        
-        #dealing with vertical movement
-        if y < n:
-            pos2 = [ x , y+1 ]
+
+        if path_list[i][1] < n: # y pos
+            pos2 = [ path_list[i][0] , path_list[i][1]+1 ]
             temp_list.append(pos2)
-        """
-        if y >= n and x < n:
-            pos2 = [ x+1 , y ]
-            path_list.append(pos2)
-        """
-        if y >= n or x >= n:
-            if x >= n and y+1 < n+1:
+
+        if path_list[i][1] >= n or path_list[i][0] >= n:
+
+            if path_list[i][0] >= n and path_list[i][1]+1 < n+1:
                 path_list[i][1] += 1
                 
-            if y >= n and x+1 < n+1:
+            if path_list[i][1] >= n and path_list[i][0]+1 < n+1:
                 path_list[i][0] += 1
+            
 
-    if path_list[i][0] >= 3:
-        print("we passed 3 i=",i)
+    
     for x in temp_list:
         path_list.append(x)
 
@@ -154,12 +138,24 @@ def second_try(n,path_lists):
 
 
 path_list = [ [0,0] ]
-N=3
-for i in range(N+1):
-    print(len(path_list))
-    path_list = second_try(n=2,path_lists=path_list)
-
+grit_size = 3
+num_steps = 2*grit_size
+time1 = time.time()
+print(" ")
 print(len(path_list))
-print(path_list) 
+print(path_list)
+for step in range(num_steps):
+    time2 = time.time()
+    print("we are at i=",step, "  it took: ",(time2-time1)/60,"min")
+    path_list = second_try(
+        n=grit_size
+        ,path_list=path_list
+        )
+    print(" ")
+    print(len(path_list))
+    print(path_list)
+
+print("the lenght:",len(path_list))
+#print("The list: ",path_list) 
 
 #first_try()
