@@ -5,7 +5,8 @@ from pstats import SortKey, Stats
 
 def branch_func(n,path_list,printstate) -> list:
     done = False
-    for i in range(len(path_list)):
+    N = len(path_list)
+    for i in range(N):
         lx = path_list[i][len(path_list[i])-1][0] # last x val
         ly = path_list[i][len(path_list[i])-1][1] # last y val
 
@@ -76,7 +77,7 @@ def first_try():
         [(0,0)]
         ]
 
-    n = 10
+    n = 2
     finished = False
     print_it = False
     time1 = time.time()
@@ -109,14 +110,51 @@ with Profile() as profile:
 """
 
 
-def second_try():
-    path_list = [ [0,1] ]
+def second_try(n,path_list):
+    
+    list_len = len(path_list)
+    print(path_list) 
+    for i in range(list_len):
+        x = path_list[i][0] # x val
+        y = path_list[i][1] # y val
+        
+        # dealing with horizontal movement
+        if x < n:
+            path_list[i][0] += 1
+        """
+        if x >= n and y < n:
+            path_list[i][1] += 1
+        """
+        
+        #dealing with vertical movement
+        if y < n:
+            pos2 = [ x , y+1 ]
+            path_list.append(pos2)
+        """
+        if y >= n and x < n:
+            pos2 = [ x+1 , y ]
+            path_list.append(pos2)
+        """
+        if y >= n or x >= n:
+            if x >= n:
+                path_list[i][1] +=1
+                
+            if y >= n:
+                path_list[i][0] +=1
+                
+    
 
-    for pos in path_list:
+    
+    return path_list
 
-        x = pos[0] # x val
-        y = pos[1] # y val
-        print("second try.",x,y)
-    return 0
 
-second_try()
+path_list = [ [0,0] ]
+N=3
+for i in range(N+1):
+    print(len(path_list))
+    path_list = second_try(n=2,path_list=path_list)
+
+print(len(path_list))
+print(path_list) 
+
+#first_try()
