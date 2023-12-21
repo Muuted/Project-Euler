@@ -71,13 +71,13 @@ def prune_list(lists)->list:
     #print("result:",result)
     return result1
 
-def first_try():
+def first_try(n):
         
     path_list = [
         [(0,0)]
         ]
 
-    n = 2
+    #n = 2
     finished = False
     print_it = False
     time1 = time.time()
@@ -113,14 +113,14 @@ with Profile() as profile:
 def second_try(n,path_list):
     temp_list = []
     for i in range(len(path_list)):
-        
+
         if path_list[i][0] < n: # x pos
             path_list[i][0] += 1
 
         if path_list[i][1] < n: # y pos
             pos2 = [ path_list[i][0] , path_list[i][1]+1 ]
             temp_list.append(pos2)
-
+        
         if path_list[i][1] >= n or path_list[i][0] >= n:
 
             if path_list[i][0] >= n and path_list[i][1]+1 < n+1:
@@ -144,6 +144,7 @@ time1 = time.time()
 print(" ")
 print(len(path_list))
 print(path_list)
+
 for step in range(num_steps):
     time2 = time.time()
     print("we are at i=",step, "  it took: ",(time2-time1)/60,"min")
@@ -158,4 +159,4 @@ for step in range(num_steps):
 print("the lenght:",len(path_list))
 #print("The list: ",path_list) 
 
-#first_try()
+first_try(n=3)
