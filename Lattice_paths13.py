@@ -136,7 +136,7 @@ def second_try(n,path_list):
 
     return path_list
 
-
+"""
 path_list = [ [0,0] ]
 grit_size = 3
 num_steps = 2*grit_size
@@ -156,7 +156,13 @@ for step in range(num_steps):
     print(len(path_list))
     print(path_list)
 
-print("the lenght:",len(path_list))
+print("the lenght:",len(path_list))"""
 #print("The list: ",path_list) 
 
-first_try(n=3)
+#first_try(n=3)
+
+from scipy.special import binom, comb
+n = 20
+x,y = 2*n,n
+paths = comb(x,y,exact=True)
+print(paths)
